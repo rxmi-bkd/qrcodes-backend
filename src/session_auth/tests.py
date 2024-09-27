@@ -70,7 +70,7 @@ class AuthenticationTests(SessionAuthTests):
         payload = {'email': 'inexistant@inexistant.com', 'password': 'inexistant'}
         response = self.client.post(reverse('session_login'), payload)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_successful_logout(self):
         # Log in
@@ -87,7 +87,7 @@ class AuthenticationTests(SessionAuthTests):
     def test_logout_with_unauthenticated_user(self):
         response = self.client.post(reverse('session_logout'))
         
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class UserUpdateTests(SessionAuthTests):
@@ -125,7 +125,7 @@ class UserUpdateTests(SessionAuthTests):
     def test_password_update_with_unauthenticated_user(self):
         response = self.client.put(reverse('session_update_password'), {})
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_password_update_with_invalid_password(self):
         # Log in with the test account
@@ -173,7 +173,7 @@ class UserUpdateTests(SessionAuthTests):
     def test_user_update_with_unauthenticated_user(self):
         response = self.client.put(reverse('session_update_user'), {})
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_user_update_with_invalid_email(self):
         # Log in with the test account
